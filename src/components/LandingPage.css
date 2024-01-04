@@ -1,0 +1,32 @@
+/* src/components/LandingPage.css */
+
+
+.landing-page {
+    position: fixed;
+    top: 0px;
+    left:0;
+    width: 100vw; /* You can adjust the width as per your preference */
+    height: 100vh; /* You can adjust the height as per your preference */
+    background-image: url('https://colorlib.com/wp/wp-content/uploads/sites/2/restaurant-wordpress-themes1.jpg'); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .order-button {
+    padding: 15px 30px;
+    margin-top: 220px;
+    font-size: 24px;
+    background-color: #ff5e14;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+    .order-button:hover {
+    background-color: #e53e00;
+  }
+  

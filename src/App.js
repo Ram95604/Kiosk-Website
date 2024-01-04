@@ -1,16 +1,17 @@
-// src/App.js
 import './App.css'
 import React, { useState } from 'react';
 import Sidebar from './components/sidebar';
 import Content from './components/content';
 import { burger, pizza, chicken } from './data';
-
+import LandingPage from './components/LandingPage';
 function App() {
   const [selectedMenu, setSelectedMenu] = useState({ main: '', sub: '' });
+  const [showLandingPage, setShowLandingPage] = useState(true); // State to control landing page visibility
   let items = [];
 
   const handleMenuSelect = (main, sub) => {
     setSelectedMenu({ main, sub });
+    setShowLandingPage(false); // Hide landing page when menu is selected
   };
 
   const filterItemsByCategory = (menuItems, category) => {
@@ -33,8 +34,14 @@ function App() {
 
   return (
     <div className="container">
-      <Sidebar onSelect={handleMenuSelect} />
-      <Content items={items} />
+      {showLandingPage ? (
+        <LandingPage onOrderClick={() => setShowLandingPage(false)} />
+      ) : (
+        <>
+          <Sidebar onSelect={handleMenuSelect} />
+          <Content items={items} />
+        </>
+      )}
     </div>
   );
 }

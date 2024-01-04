@@ -1,4 +1,3 @@
-// src/components/Content.js
 
 import React, { useEffect } from 'react';
 import './content.css';
