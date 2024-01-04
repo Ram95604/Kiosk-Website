@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import './App.css'
+import React, { useState } from 'react';
+import Sidebar from './components/sidebar';
+import Content from './components/content';
+import { burger, pizza, chicken } from './data';
 
 function App() {
+  const [selectedMenu, setSelectedMenu] = useState({ main: '', sub: '' });
+  let items = [];
+
+  const handleMenuSelect = (main, sub) => {
+    setSelectedMenu({ main, sub });
+  };
+
+  const filterItemsByCategory = (menuItems, category) => {
+    return category ? menuItems.filter(item => item.category === category) : menuItems;
+  };
+
+  switch (selectedMenu.main) {
+    case 'burger':
+      items = filterItemsByCategory(burger, selectedMenu.sub);
+      break;
+    case 'pizza':
+      items = pizza; // For Pizza, no sub-options, so display all items
+      break;
+    case 'chicken':
+      items = chicken; // For Chicken, no sub-options, so display all items
+      break;
+    default:
+      items = [];
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Sidebar onSelect={handleMenuSelect} />
+      <Content items={items} />
     </div>
   );
 }
