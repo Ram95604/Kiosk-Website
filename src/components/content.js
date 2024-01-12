@@ -4,7 +4,7 @@ import './content.css';
 const Content = ({ items,selectedMenu, onSelectMenu, addToCart }) => {
   const [cartItems, setCartItems] = useState({});
   const handleItemClick = (itemName) => {
-    onSelectMenu(itemName); // This will update the selectedMenu state in the parent component
+    onSelectMenu(itemName); 
   };
   const handleAddToCart = (item) => {
     const updatedCartItems = { ...cartItems };
@@ -39,7 +39,7 @@ const Content = ({ items,selectedMenu, onSelectMenu, addToCart }) => {
           document.body.append(ball);
         }
         
-        // Keyframes
+        
         balls.forEach((el, i, ra) => {
           let to = {
             x: Math.random() * (i % 2 === 0 ? -11 : 11),
@@ -52,7 +52,7 @@ const Content = ({ items,selectedMenu, onSelectMenu, addToCart }) => {
               { transform: `translate(${to.x}rem, ${to.y}rem)` }
             ],
             {
-              duration: (Math.random() + 1) * 2000, // random duration
+              duration: (Math.random() + 1) * 2000, 
               direction: "alternate",
               fill: "both",
               iterations: Infinity,
