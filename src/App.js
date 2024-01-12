@@ -22,10 +22,9 @@ function App() {
     return category ? menuItems.filter(item => item.category === category) : menuItems;
   };
   const handlePlaceOrder = () => {
-    // Logic to place the order can be added here
-    // For now, we'll simply display an alert
+    
     alert('Your order has been successfully placed!');
-    // You can further enhance this to clear the cart, save the order details, etc.
+    
   };
 
 
@@ -75,9 +74,9 @@ function App() {
       {showLandingPage ? (
         <LandingPage onOrderClick={() => setShowLandingPage(false)} />
       ) : showCart ? (
-        // Display cart content inline
+        
         <div className="cart-overlay" onClick={toggleCart}>
-          {/* Here you can display the list of items in the cart */}
+          
           <div className="cart-content" onClick={e => e.stopPropagation()}>
           <h2>Your Cart</h2>
           <ul>
@@ -91,7 +90,7 @@ function App() {
           <div className="cart-actions">
           <button className="close-cart" onClick={handlePlaceOrder} >Order</button>
               <button className="close-cart" onClick={toggleCart} style={{marginLeft:'25px'}}>Close Cart</button>
-              {/* You can add more buttons or actions here, like 'Proceed to Checkout' */}
+              
             </div>
         </div>
         </div>
