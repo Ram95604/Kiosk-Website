@@ -1,8 +1,24 @@
 
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import './content.css';
-const Content = ({ items }) => {
+const Content = ({ items,selectedMenu, onSelectMenu, addToCart }) => {
+  const [cartItems, setCartItems] = useState({});
+  const handleItemClick = (itemName) => {
+    onSelectMenu(itemName); // This will update the selectedMenu state in the parent component
+  };
+  const handleAddToCart = (item) => {
+    const updatedCartItems = { ...cartItems };
+    updatedCartItems[item.id] = (updatedCartItems[item.id] || 0) + 1;
+    setCartItems(updatedCartItems);
+  };
 
+  const handleRemoveFromCart = (itemId) => {
+    const updatedCartItems = { ...cartItems };
+    if (updatedCartItems[itemId] > 0) {
+      updatedCartItems[itemId] -= 1;
+      setCartItems(updatedCartItems);
+    }
+  };
     useEffect(()=>{
         const colors = ["#3CC157", "#2AA7FF", "#1B1B1B", "#FCBC0F", "#F85F36"];
 
@@ -53,15 +69,75 @@ const Content = ({ items }) => {
         <div id="background-wrapper" className="background-wrapper"></div>
       {items.map(item => (
         <div key={item.id} className="item">
-            <div>
-            <img src={item.url} alt={item.name} style={{width:'400px',height:'300px'}} />
-            </div> 
-            <div className='card-details'>
-                <h3>{item.name}</h3>
-                <p className='price'>Rs{item.price}</p>
-                <button className='order'>ADD To Cart</button>
+          {selectedMenu!=='snacks' && (
+            <>
+              <div>
+                  <img src={item.url} alt={item.name} style={{width:'400px',height:'300px'}} />
+              </div> 
+              <div className='card-details'>
+                  <h3>{item.name}</h3>
+                  {selectedMenu !== 'snacks' && (
+                    <>
+                      <p className='price'>Rs{item.price}</p>
+                      {cartItems[item.id] ? (
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '15px',marginLeft:'125px' }}>
+                      <button 
+                        onClick={() => handleRemoveFromCart(item.id)} 
+                        style={{
+                          padding: '8px 12px',
+                          fontSize: '1.2em',
+                          backgroundColor: '#f5f5f5',
+                          border: '1px solid #ccc',
+                          borderRadius: '4px',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        -
+                      </button>
+                      
+                      <span style={{ fontSize: '1.2em', fontWeight: 'bold' }}>
+                        {cartItems[item.id] || 0}
+                      </span>
+                      
+                      <button 
+                        onClick={() => handleAddToCart(item)} 
+                        style={{
+                          padding: '8px 12px',
+                          fontSize: '1.2em',
+                          backgroundColor: '#f5f5f5',
+                          border: '1px solid #ccc',
+                          borderRadius: '4px',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        +
+                      </button>
+                    </div>
+                    
+                    ) : (
+                      <button className='order' onClick={() => {
+                        handleAddToCart(item);
+                        addToCart(item);
+                      }}>Add To Cart</button>
+                    )}
+                    </>
+                  )}
+              </div> 
+            </>
 
-            </div> 
+          )}
+          {selectedMenu==='snacks' && (
+            <>
+              <div>
+                  <button onClick={() => handleItemClick(item.name)} style={{cursor:'pointer'}}><img src={item.url} alt={item.name} style={{width:'390px',height:'300px'}} /></button>
+              </div> 
+              <div className='card-details'>
+                <h3>{item.name}</h3>
+              </div>
+               
+            </>
+
+          )}
 
         </div>
       ))}

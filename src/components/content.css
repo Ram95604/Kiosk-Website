@@ -1,19 +1,18 @@
 .content {
-    position:relative;
-    overflow:hidden;
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: space-between;
-    align-items: center;
-    width: 900px; 
-    margin-left: 100px;
-    margin-top: 25px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    background-color: #fff;
-    padding: 10px; 
-  }
-  .ball {
+  position: relative;
+  overflow-y: auto;  /* Enable vertical scrolling if needed */
+  overflow-x: hidden; /* Disallow horizontal scrolling */
+  display: flex;
+  flex-wrap: wrap; 
+  align-items: center;
+  width: 900px; 
+  margin-left: 100px;
+  margin-top: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 10px; 
+}  .ball {
     position: absolute;
     border-radius: 100%;
     opacity: 0.7;
@@ -70,5 +69,5 @@
     background-color: #ddd;
    }
    h3,p{
-    margin-left: 150px;
+    margin-left: 120px;
    }

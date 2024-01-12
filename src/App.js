@@ -1,45 +1,108 @@
-import './App.css'
+import './App.css';
 import React, { useState } from 'react';
 import Sidebar from './components/sidebar';
 import Content from './components/content';
-import { burger, pizza, chicken } from './data';
 import LandingPage from './components/LandingPage';
+import { burger, pizza, chicken, food, Beverages, snacks } from './data';
+import { CiShoppingCart } from "react-icons/ci";
+
 function App() {
   const [selectedMenu, setSelectedMenu] = useState({ main: '', sub: '' });
-  const [showLandingPage, setShowLandingPage] = useState(true); // State to control landing page visibility
+  const [showLandingPage, setShowLandingPage] = useState(true);
   let items = [];
+  
+  const [cartItems, setCartItems] = useState([]);
+  const [showCart, setShowCart] = useState(false);
 
   const handleMenuSelect = (main, sub) => {
     setSelectedMenu({ main, sub });
-    setShowLandingPage(false); // Hide landing page when menu is selected
+    setShowLandingPage(false);
   };
-
   const filterItemsByCategory = (menuItems, category) => {
     return category ? menuItems.filter(item => item.category === category) : menuItems;
   };
+  const handlePlaceOrder = () => {
+    // Logic to place the order can be added here
+    // For now, we'll simply display an alert
+    alert('Your order has been successfully placed!');
+    // You can further enhance this to clear the cart, save the order details, etc.
+  };
+
+
+  const addToCart = (item) => {
+    const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
+    if (existingItem) {
+      const updatedCartItems = cartItems.map(cartItem =>
+        cartItem.id === item.id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
+      );
+      setCartItems(updatedCartItems);
+    } else {
+      setCartItems([...cartItems, { ...item, quantity: 1 }]);
+    }
+  };
+
+  const cartItemsCount = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   switch (selectedMenu.main) {
     case 'burger':
       items = filterItemsByCategory(burger, selectedMenu.sub);
       break;
     case 'pizza':
-      items = pizza; // For Pizza, no sub-options, so display all items
+      items = filterItemsByCategory(pizza, selectedMenu.sub);
       break;
     case 'chicken':
-      items = chicken; // For Chicken, no sub-options, so display all items
+      items = filterItemsByCategory(chicken, selectedMenu.sub);
+      break;
+    case 'snacks':
+      items = snacks;
+      break;
+    case 'Beverages':
+      items = Beverages;
+      break;
+    case 'food':
+      items = food;
       break;
     default:
       items = [];
   }
 
+  const toggleCart = () => {
+    setShowCart(!showCart);
+  };
+
   return (
     <div className="container">
       {showLandingPage ? (
         <LandingPage onOrderClick={() => setShowLandingPage(false)} />
+      ) : showCart ? (
+        // Display cart content inline
+        <div className="cart-overlay" onClick={toggleCart}>
+          {/* Here you can display the list of items in the cart */}
+          <div className="cart-content" onClick={e => e.stopPropagation()}>
+          <h2>Your Cart</h2>
+          <ul>
+            {cartItems.map(item => (
+              <li key={item.id} className="cart-item">
+              <span>{item.name} x {item.quantity}</span>
+              <span>Rs {item.price * item.quantity}</span> {/* Assuming each item has a 'price' property */}
+            </li>
+            ))}
+          </ul>
+          <div className="cart-actions">
+          <button className="close-cart" onClick={handlePlaceOrder} >Order</button>
+              <button className="close-cart" onClick={toggleCart} style={{marginLeft:'25px'}}>Close Cart</button>
+              {/* You can add more buttons or actions here, like 'Proceed to Checkout' */}
+            </div>
+        </div>
+        </div>
       ) : (
         <>
           <Sidebar onSelect={handleMenuSelect} />
-          <Content items={items} />
+          <Content items={items} selectedMenu={selectedMenu.main} onSelectMenu={handleMenuSelect} addToCart={addToCart} />
+          <div className="cart" onClick={toggleCart} style={{marginTop:'15px'}}>
+            <CiShoppingCart style={{ fontSize: '2.25rem', lineHeight: '2.5rem', cursor: 'pointer' }} />
+            {cartItemsCount > 0 && <span className="cart-count">{cartItemsCount}</span>}
+          </div>
         </>
       )}
     </div>
