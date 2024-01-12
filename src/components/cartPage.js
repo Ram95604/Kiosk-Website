@@ -18,7 +18,7 @@ const CartPage = ({ cartItems }) => {
         ))}
       </ul>
       <h3>Total Amount: Rs{totalAmount}</h3>
-      <button onClick={placeOrder}>Place Order</button> {/* Use the placeOrder function here */}
+      <button onClick={placeOrder}>Place Order</button> 
     </div>
   );
 };
