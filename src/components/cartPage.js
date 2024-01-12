@@ -3,7 +3,6 @@ import React from 'react';
 const CartPage = ({ cartItems }) => {
   const totalAmount = cartItems.reduce((acc, item) => acc + item.price, 0);
 
-  // Define the placeOrder function
   const placeOrder = () => {
     alert('Your order has been placed successfully!');
   };
