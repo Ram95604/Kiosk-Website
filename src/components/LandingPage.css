@@ -1,13 +1,13 @@
-/* src/components/LandingPage.css */
+
 
 
 .landing-page {
     position: fixed;
     top: 0px;
     left:0;
-    width: 100vw; /* You can adjust the width as per your preference */
-    height: 100vh; /* You can adjust the height as per your preference */
-    background-image: url('https://colorlib.com/wp/wp-content/uploads/sites/2/restaurant-wordpress-themes1.jpg'); /* Replace with your image path */
+    width: 100vw; 
+    height: 100vh; 
+    background-image: url('https://colorlib.com/wp/wp-content/uploads/sites/2/restaurant-wordpress-themes1.jpg'); 
     background-size: cover;
     background-position: center;
     display: flex;
